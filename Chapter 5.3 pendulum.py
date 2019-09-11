@@ -1,5 +1,4 @@
 import graphics as gr
-
                         #Define window size
 SIZE_X = 600
 SIZE_Y = 600
@@ -13,7 +12,9 @@ def background(color = 'green'):
     backg.draw(window)
 
 def stand():
-    """Function witch paints experimental stand"""
+    """Function witch paints experimental stand
+        returns coordinates of ball center where thread connects
+        center_x, center_y"""
                         #drawing bord
     rekwidth = 400      #bord width
     rekheight = 60      #bord height
@@ -41,14 +42,29 @@ def stand():
     stick.setFill('black')
     stick.draw(window)
 
-                        #drawing top
-    ballradius = 10     #ball radius
-    ball = gr.Circle(gr.Point(SIZE_X / 2, SIZE_Y - 2 * rekheight - stickheight), ballradius)
+                                #drawing top
+    ballradius = 10             #ball radius
+    center_x = SIZE_X / 2       #center coordinates
+    center_y = SIZE_Y - 2 * rekheight - stickheight
+    ball = gr.Circle(gr.Point(center_x, center_y), ballradius)
     ball.setFill('yellow')
     ball.draw(window)
-    pass
+    return center_x, center_y, ballradius
+center_x, center_y, rad = stand()
+def pendulum(x0 = center_x, y0 = center_y, r = rad):
+    l = 350
+    rball= 2*rad
+    thread = gr.Line(gr.Point(x0, y0 + r), gr.Point(x0, y0 + l))
+    thread.setFill('blue')
+    thread.draw(window)
+    pendball = gr.Circle(gr.Point(x0, y0 + l), rball)
+    pendball.setFill('red')
+    pendball.draw(window)
 
 
+
+print(center_x, center_y)
 background()
 stand()
+pendulum()
 window.getMouse()
